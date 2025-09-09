@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco VIP - Tu Banco Privado</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Banco VIP</div>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Inicio</a></li>
+                <li><a href="#transacciones">Transacciones</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard" class="dashboard-section">
+            <div class="user-info-card">
+                <h2>Bienvenido,</h2>
+                <h1>Oliver Favero</h1>
+                <p>Tu balance actual es:</p>
+                <p class="balance" id="balance-display">$20,000.00</p>
+                <div class="card-footer">
+                    <p>Banco VIP</p>
+                    <i class="fas fa-credit-card"></i>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="deposit-btn" class="action-btn"><i class="fas fa-money-bill-wave"></i> Depositar</button>
+                <button id="withdraw-btn" class="action-btn"><i class="fas fa-hand-holding-usd"></i> Retirar</button>
+                <button id="transfer-btn" class="action-btn"><i class="fas fa-exchange-alt"></i> Transferir</button>
+            </div>
+        </section>
+
+        <section id="transacciones" class="transacciones-section">
+            <h2>Historial de Transacciones</h2>
+            <ul id="transactions-list" class="transactions-list">
+                <li class="transaction-item income">
+                    <i class="fas fa-plus-circle"></i>
+                    <div>
+                        <p>Depósito inicial</p>
+                        <p class="transaction-date">9 de septiembre de 2025</p>
+                    </div>
+                    <p class="amount">$20,000.00</p>
+                </li>
+            </ul>
+        </section>
+        
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Banco VIP. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
