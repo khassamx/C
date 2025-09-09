@@ -1,85 +1,197 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const balanceDisplay = document.getElementById('balance-display');
-    const transactionsList = document.getElementById('transactions-list');
-    const depositBtn = document.getElementById('deposit-btn');
-    const withdrawBtn = document.getElementById('withdraw-btn');
-    const transferBtn = document.getElementById('transfer-btn');
+/* Estilos Generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+}
 
-    let balance = 20000;
+/* Header */
+header {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-    function formatCurrency(amount) {
-        return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #007BFF;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: #eef1f3;
+}
+
+.user-info-card {
+    background: linear-gradient(to right, #2c3e50, #34495e);
+    color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    text-align: left;
+}
+
+.user-info-card h1 {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+    font-weight: 700;
+}
+
+.user-info-card h2, .user-info-card p {
+    margin: 0;
+}
+
+.balance {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1.5rem 0;
+    letter-spacing: 2px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    opacity: 0.8;
+}
+
+.card-footer i {
+    font-size: 2rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Transacciones Section */
+.transacciones-section {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.transacciones-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.transactions-list {
+    list-style: none;
+    padding: 0;
+}
+
+.transaction-item {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-item.income {
+    border-left: 5px solid #28a745;
+}
+
+.transaction-item.expense {
+    border-left: 5px solid #dc3545;
+}
+
+.transaction-item i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.transaction-item.income i {
+    color: #28a745;
+}
+
+.transaction-item.expense i {
+    color: #dc3545;
+}
+
+.amount {
+    font-weight: 600;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #1a1a1a;
+    color: #cccccc;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .actions {
+        flex-direction: column;
     }
-
-    function updateBalanceDisplay() {
-        balanceDisplay.textContent = formatCurrency(balance);
-    }
-
-    function addTransaction(type, description, amount) {
-        const transactionItem = document.createElement('li');
-        transactionItem.classList.add('transaction-item', type);
-        
-        const iconClass = type === 'income' ? 'fa-plus-circle' : 'fa-minus-circle';
-
-        const today = new Date();
-        const dateString = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-
-        transactionItem.innerHTML = `
-            <i class="fas ${iconClass}"></i>
-            <div>
-                <p>${description}</p>
-                <p class="transaction-date">${dateString}</p>
-            </div>
-            <p class="amount">${type === 'income' ? '+' : '-'}${formatCurrency(amount)}</p>
-        `;
-        transactionsList.prepend(transactionItem);
-    }
-
-    depositBtn.addEventListener('click', () => {
-        const amount = parseFloat(prompt("Ingrese la cantidad a depositar:"));
-        if (!isNaN(amount) && amount > 0) {
-            balance += amount;
-            updateBalanceDisplay();
-            addTransaction('income', 'Depósito en cuenta', amount);
-            alert(`Depósito de ${formatCurrency(amount)} realizado con éxito.`);
-        } else {
-            alert("Cantidad no válida. Intente de nuevo.");
-        }
-    });
-
-    withdrawBtn.addEventListener('click', () => {
-        const amount = parseFloat(prompt("Ingrese la cantidad a retirar:"));
-        if (!isNaN(amount) && amount > 0 && amount <= balance) {
-            balance -= amount;
-            updateBalanceDisplay();
-            addTransaction('expense', 'Retiro de efectivo', amount);
-            alert(`Retiro de ${formatCurrency(amount)} realizado con éxito.`);
-        } else if (amount > balance) {
-            alert("Fondos insuficientes.");
-        } else {
-            alert("Cantidad no válida. Intente de nuevo.");
-        }
-    });
-
-    transferBtn.addEventListener('click', () => {
-        const amount = parseFloat(prompt("Ingrese la cantidad a transferir:"));
-        if (!isNaN(amount) && amount > 0 && amount <= balance) {
-            const recipient = prompt("Ingrese el nombre del destinatario:");
-            if (recipient) {
-                balance -= amount;
-                updateBalanceDisplay();
-                addTransaction('expense', `Transferencia a ${recipient}`, amount);
-                alert(`Transferencia de ${formatCurrency(amount)} a ${recipient} realizada con éxito.`);
-            } else {
-                alert("Destinatario no válido.");
-            }
-        } else if (amount > balance) {
-            alert("Fondos insuficientes.");
-        } else {
-            alert("Cantidad no válida. Intente de nuevo.");
-        }
-    });
-
-    // Actualiza el balance al cargar la página
-    updateBalanceDisplay();
-});
+}
